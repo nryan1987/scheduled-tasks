@@ -4,18 +4,19 @@ import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Notes")
-public class NoteEntity {
+@Table(name = "CreatorAlias")
+@IdClass(CreatorAliasID.class)
+public class CreatorAliasEntity {
 	@Id
-	private int NoteID;
-	private int ComicID;
-	private String Notes;
+	private int creatorId;
+	@Id
+	private String alias;
 	private Timestamp recordCreationDate;
-	private Timestamp lastUpdated;
 }

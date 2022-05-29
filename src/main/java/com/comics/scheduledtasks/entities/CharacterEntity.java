@@ -10,12 +10,11 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Notes")
-public class NoteEntity {
+@Table(name = "Characters")
+public class CharacterEntity {
+
 	@Id
-	private int NoteID;
-	private int ComicID;
-	private String Notes;
-	private Timestamp recordCreationDate;
-	private Timestamp lastUpdated;
+	private int characterId;
+	private String characters, characterPic;
+	private Timestamp recordCreationDate, lastUpdated;
 }
