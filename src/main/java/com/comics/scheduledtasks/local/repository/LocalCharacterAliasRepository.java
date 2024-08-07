@@ -7,7 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.comics.scheduledtasks.entities.CharacterAliasEntity;
+import com.comics.scheduledtasks.entities.CharacterAliasID;
 
-public interface LocalCharacterAliasRepository extends JpaRepository<CharacterAliasEntity, CharacterAliasEntity.CharacterAliasID> {
+public interface LocalCharacterAliasRepository extends JpaRepository<CharacterAliasEntity, CharacterAliasID> {
 	List<CharacterAliasEntity> findByRecordCreationDateAfter(Timestamp ts, Pageable page);
 }

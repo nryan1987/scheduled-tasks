@@ -1,19 +1,20 @@
 package com.comics.scheduledtasks.entities;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Data
 @Entity
 @Table(name = "Comics")
-public class ComicEntity {
+public class ComicEntity implements Serializable {
 	
 	@Id
 	private int ComicID;
