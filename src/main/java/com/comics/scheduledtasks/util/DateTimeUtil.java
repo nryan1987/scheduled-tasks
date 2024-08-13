@@ -1,45 +1,37 @@
 package com.comics.scheduledtasks.util;
 
+import com.comics.scheduledtasks.models.ManualSyncRequest;
+import org.springframework.stereotype.Component;
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Map;
-import java.util.Set;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 @Component
 public class DateTimeUtil {
-	Logger logger = LoggerFactory.getLogger(DateTimeUtil.class);
-	
-	public Timestamp getYesterdayTimestamp() {
-		
-//		Set<String> zoneIds = ZoneId.getAvailableZoneIds();
-//		zoneIds.forEach(zone -> {
-//			logger.info("zone: {}", zone);
-//		});
-//		
-//		Map<String, String> zoneMap = ZoneId.SHORT_IDS;
-//		Set<String> keySet = zoneMap.keySet();
-//		keySet.forEach(key -> {
-//			logger.info("key: {}. value: {}", key, zoneMap.get(key));
-//		});
-		
-		LocalDateTime localNow = LocalDateTime.now();
-		ZonedDateTime todayCDT = localNow.atZone(ZoneId.of("America/Chicago"));
-		ZonedDateTime yesterdayCDT = todayCDT.minusDays(1);
-		
-//		Timestamp yesterday = Timestamp.valueOf(yesterdayCDT.toLocalDateTime());
-//		
-//		logger.info("localNow: {}", localNow);
-//		logger.info("todayCDT: {}", todayCDT);
-//		logger.info("yesterdayCDT: {}", yesterdayCDT);
-//		logger.info("yesterday TS: {}", yesterday);
-//		logger.info("yesterday string: {}", Timestamp.valueOf(yesterdayCDT.toLocalDate().toString() + " 00:00:00"));
-		
-		return Timestamp.valueOf(yesterdayCDT.toLocalDate().toString() + " 00:00:00");
-	}
+    public Timestamp getCurrentCDTTimestamp() {
+        LocalDateTime localNow = LocalDateTime.now();
+        ZonedDateTime todayCDT = localNow.atZone(ZoneId.of("America/Chicago"));
+
+        return Timestamp.valueOf(todayCDT.toLocalDateTime());
+    }
+
+    public Timestamp getYesterdayTimestamp() {
+        LocalDateTime localNow = LocalDateTime.now();
+        ZonedDateTime todayCDT = localNow.atZone(ZoneId.of("America/Chicago"));
+        ZonedDateTime yesterdayCDT = todayCDT.minusDays(1);
+
+        return Timestamp.valueOf(yesterdayCDT.toLocalDate().toString() + " 00:00:00");
+    }
+
+    public Timestamp getTimestampFromRequest(ManualSyncRequest manualSyncRequest) {
+        LocalDateTime localNow = LocalDateTime.now();
+        ZonedDateTime todayCDT = localNow.atZone(ZoneId.of("America/Chicago"));
+        ZonedDateTime zonedDateTime = todayCDT.minusDays(manualSyncRequest.getNumDays());
+        zonedDateTime = zonedDateTime.minusMonths(manualSyncRequest.getNumMonths());
+        zonedDateTime = zonedDateTime.minusYears(manualSyncRequest.getNumYears());
+
+        return Timestamp.valueOf(zonedDateTime.toLocalDate().toString() + " 00:00:00");
+    }
 }
